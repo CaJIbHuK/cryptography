@@ -24,9 +24,6 @@ std::string RawOTPEncryptor::getMessage() {
 }
 
 VectorOTPEncryptor::VectorOTPEncryptor(std::string &message) {
-
-  int length = (MESSAGE_LENGTH + 4 - 1) / 4; // ceiling
-  this->m = std::vector<DWORD>(length);
   for (std::string::iterator it = message.begin(); it < message.end();) {
     DWORD v = 0;
     for (uchar i = 0; i < 4 && it < message.end(); i++, it++) {
@@ -55,6 +52,18 @@ std::string VectorOTPEncryptor::getMessage() {
       messageBytes.push_back((char)((*mIt) >> (i * 8)));
     }
   }
-  std::cout << messageBytes.size() << std::endl;
   return std::string(messageBytes.begin(), messageBytes.end());
+}
+
+void IteratorOTPEncryptor::encdec() {
+  std::vector<uchar>::iterator keyIt = key.begin();
+  std::vector<DWORD>::iterator mIt;
+
+  for (mIt = m.begin(); mIt < m.end(); mIt++) {
+    DWORD k = 0;
+    for (int c = 0; c < 4 && keyIt < key.end(); c++, keyIt++) {
+      k += (*keyIt) << (c * 8);
+    }
+    (*mIt) ^= k;
+  }
 }

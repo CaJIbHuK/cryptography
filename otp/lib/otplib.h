@@ -44,9 +44,9 @@ public:
   std::string getMessage() override;
 };
 
-// class IteratorOTPEncryptor : VectorOTPEncryptor {
-// public:
-//   IteratorOTPEncryptor(const std::string &message);
-//   ~IteratorOTPEncryptor();
-//   void encdec() override;
-// };
+class IteratorOTPEncryptor : public VectorOTPEncryptor {
+public:
+  IteratorOTPEncryptor(std::string &message) : VectorOTPEncryptor(message){};
+  virtual ~IteratorOTPEncryptor(){};
+  void encdec() override;
+};

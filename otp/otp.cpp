@@ -19,20 +19,27 @@ int main(int argc, char const *argv[]) {
   std::cout << "Message length: " + std::to_string(message.size()) << std::endl;
 
   std::cout << "-------Raw Array-------" << std::endl;
-  RawOTPEncryptor *rawEncryptor = new RawOTPEncryptor(message);
-  rawEncryptor->encdec();
-  rawEncryptor->encdec();
-  std::string result = rawEncryptor->getMessage();
+  RawOTPEncryptor rawEncryptor(message);
+  rawEncryptor.encdec();
+  rawEncryptor.encdec();
+  std::string result = rawEncryptor.getMessage();
   std::cout << "Input text and enc-dec result are ";
   std::cout << ((message == result) ? "equal" : "not equal") << std::endl;
 
   std::cout << "-------Vector<uint> (int iteration)-------" << std::endl;
-  VectorOTPEncryptor *vectorEncryptor = new VectorOTPEncryptor(message);
-  vectorEncryptor->encdec();
-  vectorEncryptor->encdec();
-  result = vectorEncryptor->getMessage();
+  VectorOTPEncryptor vectorEncryptor(message);
+  vectorEncryptor.encdec();
+  vectorEncryptor.encdec();
+  result = vectorEncryptor.getMessage();
   std::cout << "Input text and enc-dec result are ";
-  std::cout << result.size() << std::endl;
+  std::cout << ((message == result) ? "equal" : "not equal") << std::endl;
+
+  std::cout << "-------Vector<uint> (iterator)-------" << std::endl;
+  IteratorOTPEncryptor iteratorEncryptor(message);
+  iteratorEncryptor.encdec();
+  iteratorEncryptor.encdec();
+  result = iteratorEncryptor.getMessage();
+  std::cout << "Input text and enc-dec result are ";
   std::cout << ((message == result) ? "equal" : "not equal") << std::endl;
 
   return 0;
